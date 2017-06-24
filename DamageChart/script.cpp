@@ -10,12 +10,13 @@ void HandleKeyboardInput();
 
 vector<DWORD> damagedBones;
 
-// *** SCRIPT START *** ///
+// *** SCRIPT START *** //
 void ScriptMain()
 {
 	Main();
 }
 
+// *** UPDATE LOOP *** //
 void Main()
 {
 	while (true)
@@ -25,6 +26,7 @@ void Main()
 	}
 }
 
+// *** KEYPRESS EVENTS *** //
 void HandleKeyboardInput()
 {
 	if (IsKeyJustUp(0x38)) // 8
@@ -32,8 +34,11 @@ void HandleKeyboardInput()
 		Ped playerPed = PLAYER::PLAYER_PED_ID();
 
 		DWORD outBone = -1;
-		BOOL success = PED::GET_PED_LAST_DAMAGE_BONE(playerPed, &outBone);
+		BOOL damaged = PED::GET_PED_LAST_DAMAGE_BONE(playerPed, &outBone);
 
-		ShowSubtitle("Bone: " + std::to_string(outBone), 2000);
+		if (damaged)
+		{
+			ShowSubtitle("Bone: " + std::to_string(outBone), 2000);
+		}
 	}
 }
